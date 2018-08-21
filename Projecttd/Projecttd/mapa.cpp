@@ -97,6 +97,13 @@ void mapa::addtower(float d, float r, float s, int x, int y)
 	tab[x][y] = 2;
 }
 
+void mapa::checke(float dt)
+{
+	for (size_t i = 0; i < tom.size(); i++)
+	{
+		tom[i]->checke(eom, dt);
+	}
+}
 mapa::~mapa()
 {
 }

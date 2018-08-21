@@ -24,5 +24,7 @@ public:
 
 	void addtower(float d, float r, float s, int x, int y);
 
+	void checke(float dt);
+
 	~mapa();
 };

@@ -25,7 +25,17 @@ void disp(sf::RenderWindow *o, mapa m)
 				o->draw(sq);
 		}
 	}
+	for (size_t i = 0; i < m.tom.size(); i++)
+	{
+		o->draw(*m.tom[i]);
+	}
+	
 
+	for (size_t i = 0; i <m.eom.size(); i++)
+	{
+
+		o->draw(*m.eom[i]);
+	}
 }
 
 int main()
@@ -43,7 +53,8 @@ int main()
 
 	wawe w1(8, 4, 4, 1, 0.3);
 
-	m.addtower(10, 68, 1.8, 15, 10 );
+	m.addtower(3, 68, 1.8, 15, 10 );
+	m.addtower(3, 68, 1.8, 17, 10);
 
 
 	sf::RenderWindow okno(sf::VideoMode(20 + 20 * x, 200 + 20 * y), "td");
@@ -59,16 +70,9 @@ int main()
 		float dt = timer.getElapsedTime().asMilliseconds();
 		w1.updatew(dt, m);
 
-		m.tom[0]->checke(m.eom, dt);
+		m.checke(dt);
 
 		timer.restart();
-
-		for (size_t i = 0; i <m.eom.size(); i++)
-		{
-
-			okno.draw(*m.eom[i]);
-		}
-		okno.draw(*m.tom[0]);
 
 
 		okno.display();

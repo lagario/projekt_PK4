@@ -10,7 +10,7 @@ wawe::wawe(int amount, float hp, float speed, float armor, float interval1)
 	for (size_t i = 0; i < amount; i++)
 	{
 
-		e.push_back(new enemy(amount, speed, armor));
+		e.push_back(new enemy(hp, speed, armor));
 	}
 
 	interval = interval1;
