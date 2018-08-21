@@ -20,20 +20,20 @@ wawe::wawe(int amount, float hp, float speed, float armor, float interval1)
 		started.push_back(0);
 	}
 }
-void wawe::updatew(float dt, mapa m, std::vector<enemy*> &eom)
+void wawe::updatew(float dt, mapa &m)
 {
 	for (size_t i = 0; i <e.size(); i++)
 	{
 		if (wawetime>i*interval&&started[i] == 0)
 		{
-			eom.push_back(e[i]);
+			m.eom.push_back(e[i]);
 			started[i] = 1;
 		}
 	}
-	for (size_t i = 0; i <eom.size(); i++)
-	{
-		eom[i]->updatepos(dt, m);
-	}
+	
+	
+		m.updatepos(dt);
+	
 	wawetime += dt / 1000;
 }
 wawe::~wawe()

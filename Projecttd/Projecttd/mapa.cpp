@@ -78,6 +78,25 @@ sf::Vector2f mapa::caclpos(float d)
 
 }
 
+void mapa::updatepos(float t)
+{
+	for (size_t i = 0; i < eom.size(); i++)
+	{
+
+
+
+
+		eom[i]->dist += t * eom[i]->speed / 1000;
+		eom[i]->setPosition(caclpos(eom[i]->dist).x * 20 + 20, caclpos(eom[i]->dist).y * 20 + 20);
+	}
+}
+
+void mapa::addtower(float d, float r, float s, int x, int y)
+{
+	tom.push_back(new tower(d, r, s, x, y));
+	tab[x][y] = 2;
+}
+
 mapa::~mapa()
 {
 }

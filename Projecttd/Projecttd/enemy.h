@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "mapa.h"
+
 class enemy : public sf::CircleShape
 {
 public:
@@ -8,7 +8,7 @@ public:
 	float dist;
 	float speed;
 	float armor;
-	void updatepos(float d, mapa m);
+	//void updatepos(float d, mapa m);
 
 	enemy();
 	enemy(float hp1, float speed1, float armor1);

@@ -24,12 +24,7 @@ enemy::enemy(float hp1, float speed1, float armor1)
 	dist = 0;
 }
 
-void enemy::updatepos(float t, mapa m)
-{
-	dist += t * speed / 1000;
-	setPosition(m.caclpos(dist).x * 20 + 20, m.caclpos(dist).y * 20 + 20);
 
-}
 
 enemy::~enemy()
 {

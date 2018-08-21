@@ -12,7 +12,7 @@ public:
 	wawe();
 
 	wawe(int amount, float hp, float speed, float armor, float interval1);
-	void updatew(float dt, mapa m, std::vector<enemy*> &eom);
+	void updatew(float dt, mapa &m);
 
 
 	~wawe();

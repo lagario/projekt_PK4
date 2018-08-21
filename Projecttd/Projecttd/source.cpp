@@ -41,12 +41,9 @@ int main()
 	mapa m(x, y, t);
 	m.calctrack();
 
-	std::vector<enemy*> eonmap;
-
 	wawe w1(8, 4, 4, 1, 0.3);
 
-	tower tow(10, 50, 2, 15, 10);
-	m.tab[15][10] = 2;
+	m.addtower(10, 68, 1.8, 15, 10 );
 
 
 	sf::RenderWindow okno(sf::VideoMode(20 + 20 * x, 200 + 20 * y), "td");
@@ -60,18 +57,18 @@ int main()
 
 		disp(&okno, m);
 		float dt = timer.getElapsedTime().asMilliseconds();
-		w1.updatew(dt, m, eonmap);
+		w1.updatew(dt, m);
 
-		tow.checke(eonmap, dt);
+		m.tom[0]->checke(m.eom, dt);
 
 		timer.restart();
 
-		for (size_t i = 0; i <eonmap.size(); i++)
+		for (size_t i = 0; i <m.eom.size(); i++)
 		{
 
-			okno.draw(*eonmap[i]);
+			okno.draw(*m.eom[i]);
 		}
-		okno.draw(tow);
+		okno.draw(*m.tom[0]);
 
 
 		okno.display();
