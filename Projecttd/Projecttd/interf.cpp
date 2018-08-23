@@ -13,6 +13,7 @@ interf::interf(int x, int y,mapa *ma,sf::RenderWindow *wi)
 	m = ma;
 	w = wi;
 	towerclick = 0;
+	pressedt = 0;
 	tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
 	{
@@ -62,6 +63,16 @@ void interf::checktbuild(sf::Vector2i poz)
 		else if (m->pdist(poz, sf::Vector2i(20, 30 + m->getsizey())) < 10)
 			towerclick = 1;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+	{
+		if (!pressedt)
+		{
+			towerclick = !towerclick;
+			pressedt = true;
+		}
+	}
+	else
+		pressedt = 0;
 
 }
 
