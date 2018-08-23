@@ -5,14 +5,16 @@
 #include "enemy.h"
 class mapa
 {
+int sizex;
+int sizey;
 
 public:
 
 	std::vector<tower*> tom;
 	std::vector<enemy*> eom;
-
-	int sizex;
-	int sizey;
+	int getsizex() { return 20 * sizex; }
+	int getsizey() { return 20 * sizey; }
+	
 	std::vector<sf::Vector2i> track;
 	
 	int**tab;

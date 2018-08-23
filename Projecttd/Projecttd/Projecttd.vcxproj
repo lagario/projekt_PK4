@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="interf.cpp" />
     <ClCompile Include="mapa.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="tower.cpp" />
@@ -132,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="interf.h" />
     <ClInclude Include="mapa.h" />
     <ClInclude Include="tower.h" />
     <ClInclude Include="wawe.h" />

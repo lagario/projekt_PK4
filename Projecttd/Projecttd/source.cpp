@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "wawe.h"
 #include "tower.h"
+#include "interf.h"
 
 int x = 30;
 int y = 20;
@@ -49,6 +50,7 @@ int main()
 	t.push_back(sf::Vector2i(14, 2));
 	t.push_back(sf::Vector2i(29, 2));
 	mapa m(x, y, t);
+	interf inter(20, 5);
 	m.calctrack();
 
 	wawe w1(8, 4, 4, 1, 0.3);
@@ -66,14 +68,15 @@ int main()
 		sf::Event event;	while (okno.pollEvent(event)) { if (event.type == sf::Event::Closed)okno.close(); } //while
 		okno.clear();	okno.setFramerateLimit(60);
 
-		disp(&okno, m);
+		
 		float dt = timer.getElapsedTime().asMilliseconds();
 		w1.updatew(dt, m);
 
 		m.checke(dt);
 
 		timer.restart();
-
+		disp(&okno, m);
+		inter.disp(&okno);
 
 		okno.display();
 	} //while
