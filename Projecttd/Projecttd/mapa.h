@@ -22,6 +22,8 @@ public:
 	void calctrack();
 	sf::Vector2f caclpos(float d);
 	float pdist(sf::Vector2i p1, sf::Vector2i p2);
+	float pdist(sf::Vector2f p1, sf::Vector2f p2);
+	float pdist(sf::Vector2f p1, sf::Vector2i p2);
 	void updatepos(float d);
 
 	void addtower(float d, float r, float s, int x, int y);

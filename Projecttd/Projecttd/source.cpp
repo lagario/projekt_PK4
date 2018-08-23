@@ -68,7 +68,9 @@ int main()
 		sf::Event event;	while (okno.pollEvent(event)) { if (event.type == sf::Event::Closed)okno.close(); } //while
 		okno.clear();	okno.setFramerateLimit(60);
 
+		sf::Vector2i poz = sf::Mouse::getPosition(okno);
 		
+		inter.checktbuild(poz);
 		float dt = timer.getElapsedTime().asMilliseconds();
 		w1.updatew(dt, m);
 

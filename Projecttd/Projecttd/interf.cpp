@@ -1,5 +1,5 @@
 #include "interf.h"
-
+#include <SFML/Graphics.hpp>
 
 
 interf::interf()
@@ -12,6 +12,7 @@ interf::interf(int x, int y,mapa *ma,sf::RenderWindow *wi)
 	sizey = y;
 	m = ma;
 	w = wi;
+	towerclick = 0;
 	tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
 	{
@@ -37,8 +38,30 @@ void interf::disp()
 	sq.setPosition(sf::Vector2f(20,22+m->getsizey()));
 	sq.setFillColor(sf::Color::Green);
 	sq.setRotation(45);
+	if(towerclick)
+	sq.setSize(sf::Vector2f(15, 15));
+	else
 	sq.setSize(sf::Vector2f(12, 12));
 	w->draw(sq);
+	
+
+}
+
+void interf::checktbuild(sf::Vector2i poz)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		if (towerclick&&poz.y<m->getsizey())
+		{
+			int xt = (poz.x - 10) / 20;
+			int yt = (poz.y - 10) / 20;
+
+			m->addtower(3, 70, 1, xt, yt);
+			towerclick = 0;
+		}
+		else if (m->pdist(poz, sf::Vector2i(20, 30 + m->getsizey())) < 10)
+			towerclick = 1;
+	}
 
 }
 

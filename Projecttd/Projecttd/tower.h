@@ -7,11 +7,12 @@ class tower : public sf::RectangleShape
 {
 	float dmg;
 	float range;
-	float sps;
+	
 	float tfls;
 
 
 public:
+float sps;
 	tower(float d, float r, float s, int x, int y);
 	void checke(std::vector<enemy*> &eom, float dt);
 
