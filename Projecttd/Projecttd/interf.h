@@ -6,13 +6,14 @@ class interf
 	int sizex;
 	int sizey;
 
-	sf::RenderWindow w;
+	sf::RenderWindow *w;
+	mapa *m;
 public:
 
 	int **tab;
 
-	interf(int x,int y);
-	void disp(sf::RenderWindow *o);
+	interf(int x,int y, mapa *ma, sf::RenderWindow *wi);
+	void disp();
 
 	interf();
 	~interf();

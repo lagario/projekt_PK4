@@ -41,7 +41,7 @@ void disp(sf::RenderWindow *o, mapa m)
 
 int main()
 {
-
+	sf::RenderWindow okno(sf::VideoMode(20 + 20 * x, 200 + 20 * y), "td");
 	std::vector<sf::Vector2i> t;
 	t.push_back(sf::Vector2i(0, 4));
 	t.push_back(sf::Vector2i(19, 4));
@@ -50,7 +50,7 @@ int main()
 	t.push_back(sf::Vector2i(14, 2));
 	t.push_back(sf::Vector2i(29, 2));
 	mapa m(x, y, t);
-	interf inter(20, 5);
+	interf inter(20, 5,&m,&okno);
 	m.calctrack();
 
 	wawe w1(8, 4, 4, 1, 0.3);
@@ -59,7 +59,7 @@ int main()
 	m.addtower(3, 68, 1.8, 17, 10);
 
 
-	sf::RenderWindow okno(sf::VideoMode(20 + 20 * x, 200 + 20 * y), "td");
+	
 	sf::Clock timer;
 	sf::Clock totalt;
 
@@ -76,7 +76,7 @@ int main()
 
 		timer.restart();
 		disp(&okno, m);
-		inter.disp(&okno);
+		inter.disp();
 
 		okno.display();
 	} //while
