@@ -31,7 +31,7 @@ public:
 	void addtower(float d, float r, float s, int x, int y);
 
 	void checke(float dt);
-	void towershoot(tower* tow,sf::Vector2f epos,int ei);
+	void towershoot(tower* tow,sf::Vector2f epos,enemy* ei);
 
 	~mapa();
 };

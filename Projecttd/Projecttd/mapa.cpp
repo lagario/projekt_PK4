@@ -101,7 +101,12 @@ void mapa::updatepos(float t)
 
 	for (size_t i = 0; i < bom.size(); i++)
 	{
-		bom[i]->update(t);
+		if (bom[i]->update(t))
+		{
+			bom[i]->tow->dealdmg(eom, bom[i]->en);
+			delete bom[i];
+			bom.erase(bom.begin() + i);
+		}
 	}
 }
 
@@ -124,7 +129,7 @@ void mapa::checke(float dt)
 				if (tom[i]->tfls >= 1000.0f / tom[i]->sps)
 				{
 
-					towershoot(tom[i],eom[j]->getPosition(),j);
+					towershoot(tom[i],eom[j]->getPosition(),eom[j]);
 
 					//eom[j]->hp -= tom[i]->dmg;//
 					//tom[i]->tfls = 0;
@@ -140,7 +145,7 @@ void mapa::checke(float dt)
 	}
 }
 
-void mapa::towershoot(tower* tow, sf::Vector2f epos, int ei)
+void mapa::towershoot(tower* tow, sf::Vector2f epos, enemy* ei)
 {
 	tow->tfls = 0;
 	bom.push_back(new bullet(tow->getPosition(), epos, ei,tow));

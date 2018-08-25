@@ -7,7 +7,7 @@ sf::Vector2f bullet::norm(sf::Vector2f a)
 	return sf::Vector2f(a.x / tmp, a.y / tmp);
 	
 }
-bullet::bullet(sf::Vector2f tpos, sf::Vector2f enpos,int ei,tower* t)
+bullet::bullet(sf::Vector2f tpos, sf::Vector2f enpos,enemy* ei,tower* t)
 {
 	setFillColor(sf::Color::Magenta);
 	setOrigin(0, 0);
@@ -17,7 +17,7 @@ bullet::bullet(sf::Vector2f tpos, sf::Vector2f enpos,int ei,tower* t)
 	epos = enpos;
 	speed = 1;
 	disttt= sqrt(((epos - spos).x)*((epos - spos).x) + ((epos - spos).y)*((epos - spos).y));
-	eind = ei;
+	en = ei;
 	tow = t;
 }
 

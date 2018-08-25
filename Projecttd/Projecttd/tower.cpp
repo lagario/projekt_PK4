@@ -35,7 +35,21 @@ void tower::checke(std::vector<enemy*> &eom, float dt)
 	}
 }
 
-
+void tower::dealdmg(std::vector<enemy*> &eom, enemy* ei)
+{
+	ei->hp -= dmg;
+	if (ei->hp < 0.001)
+	{
+		std::vector<enemy*>::iterator it = eom.begin();
+		while(*it != ei)
+		{
+			it++;
+		}
+		eom.erase(it);
+		delete ei;
+		
+	}
+}
 tower::~tower()
 {
 }
