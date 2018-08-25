@@ -50,8 +50,13 @@ int main()
 	mapa m(x, y, t);
 	interf inter(20, 5,&m,&okno);
 	m.calctrack();
-
-	wawe w1(8, 4, 4, 1, 0.3);
+	std::vector<wawe*> wawes;
+	for (size_t i = 0; i < 100; i++)
+	{
+		wawes.push_back(new wawe(8, pow(2,sqrt(i)+1), 4, 1, 0.3));
+	}
+	
+	int wawenr = 1;
 
 	//m.addtower(3, 68, 1.8, 15, 10 );
 	m.addtower(3, 100, 2.6, 17, 10);
@@ -60,7 +65,7 @@ int main()
 	
 	sf::Clock timer;
 	sf::Clock totalt;
-
+	wawes[0]->updatew(0.01,m);
 	while (okno.isOpen())
 	{
 		sf::Event event;	while (okno.pollEvent(event)) { if (event.type == sf::Event::Closed)okno.close(); } //while
@@ -70,7 +75,13 @@ int main()
 		
 		inter.checktbuild(poz);
 		float dt = timer.getElapsedTime().asMilliseconds();
-		w1.updatew(dt, m);
+		for (size_t i = 0; i <wawenr; i++)
+		{
+			wawes[i]->updatew(dt, m);
+		}
+		m.updatepos(dt);
+		if (m.eom.size() == 0&&wawes[wawenr-1]->wawetime>1)
+			wawenr++;
 
 		m.checke(dt);
 

@@ -4,8 +4,12 @@
 #include "mapa.h"
 class wawe
 {
+	float whp;
+	float wspeed;
+	int wamount;
+	float warmor;
 public:
-	std::vector<enemy*> e;
+	//std::vector<enemy*> e;
 	std::vector<int> started;
 	float interval;
 	float wawetime;

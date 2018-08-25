@@ -7,12 +7,15 @@ wawe::wawe()
 }
 wawe::wawe(int amount, float hp, float speed, float armor, float interval1)
 {
-	for (size_t i = 0; i < amount; i++)
+	/*for (size_t i = 0; i < amount; i++)
 	{
-
+		
 		e.push_back(new enemy(hp, speed, armor));
-	}
-
+	}*/
+	whp=hp;
+	wspeed=speed;
+	wamount=amount;
+	warmor=armor;
 	interval = interval1;
 	wawetime = 0;
 	for (size_t i = 0; i <amount; i++)
@@ -22,17 +25,17 @@ wawe::wawe(int amount, float hp, float speed, float armor, float interval1)
 }
 void wawe::updatew(float dt, mapa &m)
 {
-	for (size_t i = 0; i <e.size(); i++)
+	for (size_t i = 0; i <wamount; i++)
 	{
 		if (wawetime>i*interval&&started[i] == 0)
 		{
-			m.eom.push_back(e[i]);
+			m.eom.push_back(new enemy(whp, wspeed, warmor));
 			started[i] = 1;
 		}
 	}
 	
 	
-		m.updatepos(dt);
+		//m.updatepos(dt);
 	
 	wawetime += dt / 1000;
 }
