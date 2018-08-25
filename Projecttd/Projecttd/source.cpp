@@ -53,8 +53,8 @@ int main()
 
 	wawe w1(8, 4, 4, 1, 0.3);
 
-	m.addtower(3, 68, 1.8, 15, 10 );
-	m.addtower(3, 68, 1.8, 17, 10);
+	//m.addtower(3, 68, 1.8, 15, 10 );
+	m.addtower(3, 100, 2.6, 17, 10);
 
 
 	

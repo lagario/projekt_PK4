@@ -41,13 +41,15 @@ void tower::dealdmg(std::vector<enemy*> &eom, enemy* ei)
 	if (ei->hp < 0.001)
 	{
 		std::vector<enemy*>::iterator it = eom.begin();
-		while(*it != ei)
+		while(it != eom.end()&&*it != ei)
 		{
 			it++;
 		}
-		eom.erase(it);
-		delete ei;
-		
+		if (it != eom.end())
+		{
+			eom.erase(it);
+			delete ei;
+		}
 	}
 }
 tower::~tower()
