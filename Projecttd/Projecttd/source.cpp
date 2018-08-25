@@ -8,6 +8,7 @@
 #include "wawe.h"
 #include "tower.h"
 #include "interf.h"
+#include "bullet.h"
 
 int x = 30;
 int y = 20;
@@ -27,16 +28,13 @@ void disp(sf::RenderWindow *o, mapa m)
 		}
 	}
 	for (size_t i = 0; i < m.tom.size(); i++)
-	{
 		o->draw(*m.tom[i]);
-	}
 	
-
 	for (size_t i = 0; i <m.eom.size(); i++)
-	{
-
 		o->draw(*m.eom[i]);
-	}
+
+	for (size_t i = 0; i <m.bom.size(); i++)
+		o->draw(*m.bom[i]);
 }
 
 int main()

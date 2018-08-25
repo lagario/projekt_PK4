@@ -34,6 +34,8 @@ void tower::checke(std::vector<enemy*> &eom, float dt)
 
 	}
 }
+
+
 tower::~tower()
 {
 }

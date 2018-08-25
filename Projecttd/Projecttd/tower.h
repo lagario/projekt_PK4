@@ -5,17 +5,20 @@
 #include <cmath>
 class tower : public sf::RectangleShape
 {
+	
+public:
+
 	float dmg;
 	float range;
+	float sps;
+	float tfls;//  czas od ostatniego strzalu
 	
-	float tfls;
 
 
-public:
-float sps;
+
 	tower(float d, float r, float s, int x, int y);
-	void checke(std::vector<enemy*> &eom, float dt);
-
+	void checke(std::vector<enemy*> &eom, float dt);//
+	//void shoot(int ei,sf::Vector2f epos);
 	~tower();
 };
 

@@ -52,10 +52,11 @@ void interf::checktbuild(sf::Vector2i poz)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (towerclick&&poz.y<m->getsizey())
+		int xt = (poz.x - 10) / 20;
+		int yt = (poz.y - 10) / 20;
+		if (towerclick&&poz.y<m->getsizey()&&m->tab[xt][yt]==1)
 		{
-			int xt = (poz.x - 10) / 20;
-			int yt = (poz.y - 10) / 20;
+			
 
 			m->addtower(3, 70, 1, xt, yt);
 			towerclick = 0;

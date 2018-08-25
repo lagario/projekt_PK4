@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="interf.cpp" />
     <ClCompile Include="mapa.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="wawe.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="interf.h" />
     <ClInclude Include="mapa.h" />
