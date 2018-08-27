@@ -96,6 +96,7 @@ void mapa::updatepos(float t)
 
 		eom[i]->dist += t * eom[i]->speed / 1000;
 		eom[i]->setPosition(caclpos(eom[i]->dist).x * 20 + 20, caclpos(eom[i]->dist).y * 20 + 20);
+		eom[i]->updatee(t);
 	}
 
 
@@ -120,7 +121,7 @@ void mapa::checke(float dt)
 {
 	for (size_t i = 0; i < tom.size(); i++)
 	{
-		//tom[i]->checke(eom, dt);
+		
 		tom[i]->tfls += dt;
 		for (size_t j = 0; j < eom.size(); j++)
 		{

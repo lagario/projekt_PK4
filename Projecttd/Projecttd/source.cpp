@@ -53,7 +53,7 @@ int main()
 	std::vector<wawe*> wawes;
 	for (size_t i = 0; i < 100; i++)
 	{
-		wawes.push_back(new wawe(8, pow(2,sqrt(i)+1), 4, 1, 0.3));
+		wawes.push_back(new wawe(8, pow(2,sqrt(i)+1), 4, 1+i, 0.3));
 	}
 	
 	int wawenr = 1;
@@ -80,7 +80,7 @@ int main()
 			wawes[i]->updatew(dt, m);
 		}
 		m.updatepos(dt);
-		if (m.eom.size() == 0&&wawes[wawenr-1]->wawetime>1)
+		if (m.eom.size() == 0&&wawes[wawenr-1]->wawetime>1&&wawenr<wawes.size()-1)
 			wawenr++;
 
 		m.checke(dt);

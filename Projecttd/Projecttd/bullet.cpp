@@ -12,7 +12,7 @@ bullet::bullet(sf::Vector2f tpos, sf::Vector2f enpos,enemy* ei,tower* t)
 	setFillColor(sf::Color::Magenta);
 	setOrigin(0, 0);
 	setPosition(tpos);
-	setRadius(2);
+	setRadius(3);
 	spos = tpos;
 	epos = enpos;
 	speed = 1;
