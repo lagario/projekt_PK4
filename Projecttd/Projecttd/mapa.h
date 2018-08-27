@@ -16,7 +16,8 @@ public:
 	std::vector<bullet*> bom;
 	int getsizex() { return 20 * sizex; }
 	int getsizey() { return 20 * sizey; }
-		
+	int gold;
+	int wawenr ;
 	std::vector<sf::Vector2i> track;
 	
 	int**tab;
@@ -27,7 +28,7 @@ public:
 	float pdist(sf::Vector2f p1, sf::Vector2f p2);
 	float pdist(sf::Vector2f p1, sf::Vector2i p2);
 	void updatepos(float d);
-
+	void deletee(enemy* en);
 	void addtower(float d, float r, float s, int x, int y);
 
 	void checke(float dt);

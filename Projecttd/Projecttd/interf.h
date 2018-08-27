@@ -7,6 +7,7 @@ class interf
 	int sizey;
 	bool towerclick;
 	bool pressedt;
+	bool pressedu;
 
 	sf::RenderWindow *w;
 	mapa *m;

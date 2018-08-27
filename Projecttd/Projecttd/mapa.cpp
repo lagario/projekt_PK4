@@ -8,6 +8,8 @@ mapa::mapa(int x, int y, std::vector<sf::Vector2i> track1)
 	sizex = x;
 	sizey = y;
 	track = track1;
+	gold = 150;
+	wawenr = 1;
 	tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
 	{
@@ -104,7 +106,10 @@ void mapa::updatepos(float t)
 	{
 		if (bom[i]->update(t))
 		{
-			bom[i]->tow->dealdmg(eom, bom[i]->en);
+
+			bom[i]->en->takedmg(bom[i]->tow->dmg, bom[i]->tow->fdmg);
+			if (bom[i]->en->hp < 0.00001)
+				deletee(bom[i]->en);
 			delete bom[i];
 			bom.erase(bom.begin() + i);
 		}
@@ -152,6 +157,22 @@ void mapa::towershoot(tower* tow, sf::Vector2f epos, enemy* ei)
 	bom.push_back(new bullet(tow->getPosition(), epos, ei,tow));
 
 }
+void mapa::deletee(enemy *en)
+{
+		
+		std::vector<enemy*>::iterator it = eom.begin();
+		while (it != eom.end() && *it != en)
+		{
+			it++;
+		}
+		if (it != eom.end())
+		{
+			eom.erase(it);
+			delete en;
+		}
+		gold += 2+pow(wawenr, 1.4);
+}
+
 
 
 mapa::~mapa()

@@ -8,6 +8,7 @@ tower::tower(float d, float r, float s, int x, int y)
 	range = r;
 	sps = s;
 	tfls = 0;
+	lvl = 1;
 	setPosition(sf::Vector2f(20 + 20 * x, 12 + 20 * y));
 	setFillColor(sf::Color::Green);
 	setRotation(45);
@@ -15,23 +16,12 @@ tower::tower(float d, float r, float s, int x, int y)
 }
 
 
-
-void tower::dealdmg(std::vector<enemy*> &eom, enemy* ei)
+void tower::upgrade()
 {
-	ei->takedmg(dmg,fdmg);
-	if (ei->hp < 0.001)
-	{
-		std::vector<enemy*>::iterator it = eom.begin();
-		while(it != eom.end()&&*it != ei)
-		{
-			it++;
-		}
-		if (it != eom.end())
-		{
-			eom.erase(it);
-			delete ei;
-		}
-	}
+	dmg *= 2.2;
+	range *= 1.1;
+	sps *= 1.15;
+	lvl++;
 }
 tower::~tower()
 {

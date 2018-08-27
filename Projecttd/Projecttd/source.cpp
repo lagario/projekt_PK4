@@ -53,13 +53,13 @@ int main()
 	std::vector<wawe*> wawes;
 	for (size_t i = 0; i < 100; i++)
 	{
-		wawes.push_back(new wawe(8, pow(2,sqrt(i)+1), 4, 1+i, 0.3));
+		wawes.push_back(new wawe(8, pow(2.5,sqrt(i)+1), 4, 1+i, 0.3));
 	}
 	
-	int wawenr = 1;
+	
 
 	//m.addtower(3, 68, 1.8, 15, 10 );
-	m.addtower(3, 100, 2.6, 17, 10);
+	//m.addtower(3, 100, 2.6, 17, 10);
 
 
 	
@@ -75,13 +75,13 @@ int main()
 		
 		inter.checktbuild(poz);
 		float dt = timer.getElapsedTime().asMilliseconds();
-		for (size_t i = 0; i <wawenr; i++)
+		for (size_t i = 0; i <m.wawenr; i++)
 		{
 			wawes[i]->updatew(dt, m);
 		}
 		m.updatepos(dt);
-		if (m.eom.size() == 0&&wawes[wawenr-1]->wawetime>1&&wawenr<wawes.size()-1)
-			wawenr++;
+		if (m.eom.size() == 0&&wawes[m.wawenr-1]->wawetime>1&&m.wawenr<wawes.size()-1)
+			m.wawenr++;
 
 		m.checke(dt);
 

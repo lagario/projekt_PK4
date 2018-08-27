@@ -5,18 +5,16 @@
 #include <cmath>
 class tower : public sf::RectangleShape
 {
-	float fdmg;
+	int lvl;
 	
 public:
-
+	int getl() { return lvl; }
+	float fdmg;
 	float dmg;
 	float range;
 	float sps;
 	float tfls;//  czas od ostatniego strzalu
-	
-
-	
-	void dealdmg(std::vector<enemy*> &eom, enemy* ei);
+	void upgrade();
 	tower(float d, float r, float s, int x, int y);
 
 	~tower();
