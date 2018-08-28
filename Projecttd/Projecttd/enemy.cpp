@@ -30,8 +30,10 @@ enemy::enemy(float hp1, float speed1, float armor1)
 }
 
 void enemy::takedmg(float dm,float fdm)
-{
-	hp -= (dm - sqrt(armor))*(100 / (100 + log(armor)));
+{	dm= (dm - sqrt(armor))*(100 / (100 + log(armor)));
+	if (dm > 0)
+	hp -= dm;
+
 	hp -= fdm;
 	setFillColor(sf::Color::Color((100+155*hp/maxhp), 0, 0, 255));
 	slow += fdm;

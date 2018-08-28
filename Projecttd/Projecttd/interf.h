@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "mapa.h"
+#include <sstream>
 class interf
 {
 	int sizex;
@@ -8,6 +9,9 @@ class interf
 	bool towerclick;
 	bool pressedt;
 	bool pressedu;
+	sf::Font font;
+	sf::Text t1;
+	sf::Text t2;
 
 	sf::RenderWindow *w;
 	mapa *m;

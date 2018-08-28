@@ -48,7 +48,7 @@ int main()
 	t.push_back(sf::Vector2i(14, 2));
 	t.push_back(sf::Vector2i(29, 2));
 	mapa m(x, y, t);
-	interf inter(20, 5,&m,&okno);
+	interf inter(18, 5,&m,&okno);
 	m.calctrack();
 	std::vector<wawe*> wawes;
 	for (size_t i = 0; i < 100; i++)
@@ -59,7 +59,7 @@ int main()
 	
 
 	//m.addtower(3, 68, 1.8, 15, 10 );
-	//m.addtower(3, 100, 2.6, 17, 10);
+	m.addtower(3, 100, 2.6, 17, 10);
 
 
 	

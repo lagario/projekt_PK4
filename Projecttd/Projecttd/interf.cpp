@@ -1,6 +1,6 @@
 #include "interf.h"
 #include <SFML/Graphics.hpp>
-#include <sstream>
+
 #include<cmath>
 
 
@@ -27,17 +27,19 @@ interf::interf(int x, int y,mapa *ma,sf::RenderWindow *wi)
 void interf::disp()
 {
 	sf::RectangleShape sq;
-	sq.setSize(sf::Vector2f(20, 20));
+	sq.setSize(sf::Vector2f(20*sizex, 20*sizey));
 	sq.setFillColor(sf::Color::Cyan);
 
-	for (size_t i = 0; i < sizex; i++)
-	{
-		for (int j=0; j < sizey; j++)
-		{
-			sq.setPosition(sf::Vector2f(10 + 20 * i,m->getsizey()+20 + 20 * j));
-			w->draw(sq);
-		}
-	}
+	
+	sq.setPosition(sf::Vector2f(10 ,m->getsizey()+20));
+	w->draw(sq);
+
+	sq.setFillColor(sf::Color::Yellow);
+	sq.setSize(sf::Vector2f(200, 20 * sizey));
+	sq.setPosition(sf::Vector2f(20+20*sizex, m->getsizey() + 20));
+	w->draw(sq);
+
+
 
 	sq.setPosition(sf::Vector2f(20,22+m->getsizey()));
 	sq.setFillColor(sf::Color::Green);
@@ -62,21 +64,23 @@ void interf::disp()
 
 
 
-	std::ostringstream ss;
-	ss << "gold: "<<m->gold;
-	sf::Font font;
+	std::ostringstream ss1;
+	
+	ss1 << "gold: "<<m->gold;
+	
 
 	
 	if (font.loadFromFile("C:/Users/krzys/source/repos/projekt_PK4/Projecttd/Debug/sansation.ttf"))
 	{
-		sf::Text t;
+		
 
-		t.setFont(font);
-		t.setCharacterSize(20);
-		t.setPosition(100, 20 + m->getsizey());
-		t.setString(ss.str());
-		t.setFillColor(sf::Color::Black);
-		w->draw(t);
+		t1.setFont(font);
+		t1.setCharacterSize(20);
+		t1.setPosition(100, 20 + m->getsizey());
+		t1.setString(ss1.str());
+		t1.setFillColor(sf::Color::Black);
+		w->draw(t1);
+		w->draw(t2);
 	}
 }
 
@@ -96,7 +100,36 @@ void interf::checktbuild(sf::Vector2i poz)
 		}
 		else if (m->pdist(poz, sf::Vector2i(20, 30 + m->getsizey())) < 10)
 			towerclick = 1;
+
+		if (m->tab[xt][yt] == 2)
+		{
+			int j = 0;
+			for (size_t i = 0; i < m->tom.size(); i++)
+			{
+				int xt1 = (m->tom[i]->getPosition().x - 10) / 20;
+				int yt1 = (m->tom[i]->getPosition().y - 10) / 20;
+				if (xt1 == xt && yt == yt1)
+				{
+					j = i;
+					break;
+				}
+			}
+			;
+			std::ostringstream ss1;
+			ss1 << "dmg: " << m->tom[j]->dmg<< "\nrange: " << m->tom[j]->range << "\nspeed: " << m->tom[j]->sps;
+			t2.setFont(font);
+			t2.setCharacterSize(20);
+			t2.setPosition(30+sizex*20, 20 + m->getsizey());
+			t2.setString(ss1.str());
+			t2.setFillColor(sf::Color::Black);
+			//w->draw(t1);
+
+		}
+
+
+
 	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{
 		if (!pressedt)
@@ -136,7 +169,14 @@ void interf::checktbuild(sf::Vector2i poz)
 	}
 	else
 		pressedu = 0;
+
+
+
+
+
 }
+
+
 
 interf::~interf()
 {

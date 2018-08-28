@@ -15,7 +15,7 @@ bullet::bullet(sf::Vector2f tpos, sf::Vector2f enpos,enemy* ei,tower* t)
 	setRadius(3);
 	spos = tpos;
 	epos = enpos;
-	speed = 1;
+	speed = 0.2;
 	disttt= sqrt(((epos - spos).x)*((epos - spos).x) + ((epos - spos).y)*((epos - spos).y));
 	en = ei;
 	tow = t;

@@ -104,14 +104,31 @@ void mapa::updatepos(float t)
 
 	for (size_t i = 0; i < bom.size(); i++)
 	{
+		
 		if (bom[i]->update(t))
 		{
 
 			bom[i]->en->takedmg(bom[i]->tow->dmg, bom[i]->tow->fdmg);
 			if (bom[i]->en->hp < 0.00001)
-				deletee(bom[i]->en);
-			delete bom[i];
-			bom.erase(bom.begin() + i);
+			{
+				enemy*p=bom[i]->en;
+				for (size_t i2 = 0; i2 < bom.size(); i2++)
+				{
+					if (bom[i2]->en ==p)
+					{
+						delete bom[i2];
+						bom.erase(bom.begin() + i2);
+						i2--;
+					}
+					
+				}
+				deletee(p);
+			}	
+			else
+			{
+				delete bom[i];
+				bom.erase(bom.begin() + i);
+			}
 		}
 	}
 }
