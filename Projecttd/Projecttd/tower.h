@@ -3,9 +3,11 @@
 #include "enemy.h"
 #include <vector>
 #include <cmath>
+#include "gem.h"
 class tower : public sf::RectangleShape
 {
 	int lvl;
+	gem*g;
 	
 public:
 	int getl() { return lvl; }

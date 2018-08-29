@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="gem.cpp" />
     <ClCompile Include="interf.cpp" />
     <ClCompile Include="mapa.cpp" />
     <ClCompile Include="source.cpp" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="bullet.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="gem.h" />
     <ClInclude Include="interf.h" />
     <ClInclude Include="mapa.h" />
     <ClInclude Include="tower.h" />
