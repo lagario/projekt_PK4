@@ -24,6 +24,22 @@ interf::interf(int x, int y,mapa *ma,sf::RenderWindow *wi)
 	}
 }
 
+tower*interf::gettptr(int x, int y)
+{
+	int j = 0;
+	for (size_t i = 0; i < m->tom.size(); i++)
+	{
+		int xt1 = (m->tom[i]->getPosition().x - 10) / 20;
+		int yt1 = (m->tom[i]->getPosition().y - 10) / 20;
+		if (xt1 == x && y == yt1)
+		{
+			j = i;
+			break;
+		}
+	}
+	return m->tom[j];
+}
+
 void interf::disp()
 {
 	sf::RectangleShape sq;
@@ -39,7 +55,9 @@ void interf::disp()
 	sq.setPosition(sf::Vector2f(20+20*sizex, m->getsizey() + 20));
 	w->draw(sq);
 
-
+	sq.setPosition(sf::Vector2f(10, m->getsizey()+sizey*20 + 30));
+	sq.setSize(sf::Vector2f(sizex*20, 50));
+	w->draw(sq);
 
 	sq.setPosition(sf::Vector2f(20,22+m->getsizey()));
 	sq.setFillColor(sf::Color::Green);
@@ -64,10 +82,10 @@ void interf::disp()
 
 
 
-	std::ostringstream ss1;
+	std::ostringstream ss1,ss2;
 	
 	ss1 << "gold: "<<m->gold;
-	
+	ss2 << "wawe: " << m->wawenr;
 
 	
 	if (font.loadFromFile("C:/Users/krzys/source/repos/projekt_PK4/Projecttd/Debug/sansation.ttf"))
@@ -81,6 +99,13 @@ void interf::disp()
 		t1.setFillColor(sf::Color::Black);
 		w->draw(t1);
 		w->draw(t2);
+
+		t3.setFont(font);
+		t3.setCharacterSize(20);
+		t3.setPosition(20, 40 + m->getsizey()+sizey*20);
+		t3.setString(ss2.str());
+		t3.setFillColor(sf::Color::Black);
+		w->draw(t3);
 	}
 }
 
@@ -90,8 +115,8 @@ void interf::checktbuild(sf::Vector2i poz)
 	int yt = (poz.y - 10) / 20;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		
-		if (towerclick&&poz.y<m->getsizey()&&m->tab[xt][yt]==1&&m->gold>=50)
+
+		if (towerclick&&poz.y < m->getsizey() && m->tab[xt][yt] == 1 && m->gold >= 50)
 		{
 			m->gold -= 50;
 
@@ -100,35 +125,24 @@ void interf::checktbuild(sf::Vector2i poz)
 		}
 		else if (m->pdist(poz, sf::Vector2i(20, 30 + m->getsizey())) < 10)
 			towerclick = 1;
-
-		if (m->tab[xt][yt] == 2)
-		{
-			int j = 0;
-			for (size_t i = 0; i < m->tom.size(); i++)
-			{
-				int xt1 = (m->tom[i]->getPosition().x - 10) / 20;
-				int yt1 = (m->tom[i]->getPosition().y - 10) / 20;
-				if (xt1 == xt && yt == yt1)
-				{
-					j = i;
-					break;
-				}
-			}
-			;
-			std::ostringstream ss1;
-			ss1 << "dmg: " << m->tom[j]->dmg<< "\nrange: " << m->tom[j]->range << "\nspeed: " << m->tom[j]->sps;
-			t2.setFont(font);
-			t2.setCharacterSize(20);
-			t2.setPosition(30+sizex*20, 20 + m->getsizey());
-			t2.setString(ss1.str());
-			t2.setFillColor(sf::Color::Black);
-			//w->draw(t1);
-
-		}
-
-
+	}
+	if (m->isinmap(poz)&&m->tab[xt][yt] == 2)
+	{
+		tower* p = gettptr(xt, yt);
+		std::ostringstream ss1;
+		ss1 << "dmg: " << p->dmg << "\nrange: " << p->range << "\nspeed: " << p->sps<<"\ngemdmg: "<< (p->g == nullptr ? 0 : p->g->dmg);
+		t2.setFont(font);
+		t2.setCharacterSize(20);
+		t2.setPosition(30 + sizex * 20, 20 + m->getsizey());
+		t2.setString(ss1.str());
+		t2.setFillColor(sf::Color::Black);
+		//w->draw(t1);
 
 	}
+
+
+
+	
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{
@@ -145,22 +159,12 @@ void interf::checktbuild(sf::Vector2i poz)
 	{
 		if (!pressedu&&m->tab[xt][yt]==2)
 		{
-			int j = 0;
-			for (size_t i = 0; i < m->tom.size(); i++)
-			{
-				int xt1 = (m->tom[i]->getPosition().x-10 )/ 20;
-				int yt1 =( m->tom[i]->getPosition().y-10) / 20;
-				if (xt1 == xt && yt == yt1)
-				{
-					j = i;
-					break;
-				}
-			}
+			tower*p = gettptr(xt, yt);
 			
-			int cost = 25 * pow(2, m->tom[j]->getl());
+			int cost = 25 * pow(2, p->getl());
 			if (m->gold >=cost )
 			{
-				m->tom[j]->upgrade();
+				p->upgrade();
 				m->gold -= cost;
 			}
 				
@@ -170,6 +174,11 @@ void interf::checktbuild(sf::Vector2i poz)
 	else
 		pressedu = 0;
 
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&sf::Keyboard::isKeyPressed(sf::Keyboard::B) && m->tab[xt][yt] == 2)
+	{
+		tower*p = gettptr(xt, yt);
+		m->addgem(p, 1);
+	}
 
 
 

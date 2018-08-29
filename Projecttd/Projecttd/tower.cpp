@@ -4,7 +4,6 @@
 tower::tower(float d, float r, float s, int x, int y)
 {
 	dmg = d;
-	fdmg = 0;
 	range = r;
 	sps = s;
 	tfls = 0;
@@ -13,15 +12,19 @@ tower::tower(float d, float r, float s, int x, int y)
 	setFillColor(sf::Color::Green);
 	setRotation(45);
 	setSize(sf::Vector2f(12, 12));
+	g = nullptr;
 }
 
 
 void tower::upgrade()
 {
-	dmg *= 2.2;
+	dmg *= 1.9;
 	range *= 1.1;
 	sps *= 1.15;
 	lvl++;
+
+	if(g)
+	g->updatedmg(lvl);
 }
 tower::~tower()
 {

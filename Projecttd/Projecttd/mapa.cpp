@@ -64,7 +64,18 @@ float mapa::pdist(sf::Vector2f p1, sf::Vector2i p2)
 {
 	return sqrt((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
 }
-
+bool mapa::isinmap(sf::Vector2f pos)
+{
+	if (pos.x > 10 && pos.y > 10 && pos.x < 20 * sizex + 10 && sizey < 20 * sizey + 10)
+		return true;
+	return 0;
+}
+bool mapa::isinmap(sf::Vector2i pos)
+{
+	if (pos.x > 10 && pos.y > 10 && pos.x < 20 * sizex + 10 && sizey < 20 * sizey + 10)
+		return true;
+	return 0;
+}
 
 sf::Vector2f mapa::caclpos(float d)
 {
@@ -108,7 +119,7 @@ void mapa::updatepos(float t)
 		if (bom[i]->update(t))
 		{
 
-			bom[i]->en->takedmg(bom[i]->tow->dmg, bom[i]->tow->fdmg);
+			bom[i]->en->takedmg(bom[i]->tow->dmg, (bom[i]->tow->g==nullptr?0: bom[i]->tow->g->dmg));
 			if (bom[i]->en->hp < 0.00001)
 			{
 				enemy*p=bom[i]->en;
@@ -165,6 +176,14 @@ void mapa::checke(float dt)
 				}
 
 		}
+	}
+}
+
+void mapa::addgem(tower* t, int typ)
+{
+	if (t->g == nullptr)
+	{
+		t->g = new gem(typ, t->getPosition()-sf::Vector2f(4,-4));
 	}
 }
 

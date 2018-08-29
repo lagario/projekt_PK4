@@ -7,11 +7,11 @@
 class tower : public sf::RectangleShape
 {
 	int lvl;
-	gem*g;
+	
 	
 public:
+	gem*g;
 	int getl() { return lvl; }
-	float fdmg;
 	float dmg;
 	float range;
 	float sps;

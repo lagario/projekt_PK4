@@ -10,11 +10,11 @@ class interf
 	bool pressedt;
 	bool pressedu;
 	sf::Font font;
-	sf::Text t1;
-	sf::Text t2;
-
+	sf::Text t1,t2,t3;
 	sf::RenderWindow *w;
 	mapa *m;
+
+	tower* gettptr(int, int);
 public:
 
 	int **tab;

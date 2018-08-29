@@ -4,6 +4,7 @@
 #include "tower.h"
 #include "enemy.h"
 #include "bullet.h"
+#include "gem.h"
 class mapa
 {
 int sizex;
@@ -19,6 +20,8 @@ public:
 	int gold;
 	int wawenr ;
 	std::vector<sf::Vector2i> track;
+	bool isinmap(sf::Vector2f pos);
+	bool isinmap(sf::Vector2i pos);
 	
 	int**tab;
 	mapa(int x, int y, std::vector<sf::Vector2i> track);
@@ -30,6 +33,7 @@ public:
 	void updatepos(float d);
 	void deletee(enemy* en);
 	void addtower(float d, float r, float s, int x, int y);
+	void addgem(tower*, int typ);
 
 	void checke(float dt);
 	void towershoot(tower* tow,sf::Vector2f epos,enemy* ei);

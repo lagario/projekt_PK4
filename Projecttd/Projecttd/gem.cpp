@@ -7,7 +7,7 @@ gem::gem(int typ,sf::Vector2f poz)
 	type = typ;
 	if (type == 1)
 		setFillColor(sf::Color::Blue);
-	setRadius(5);
+	setRadius(4);
 	setOrigin(0, 0);
 	lvl = 1;
 	setPosition(poz);
@@ -16,7 +16,7 @@ gem::gem(int typ,sf::Vector2f poz)
 }
 void gem::updatedmg(int tlvl)
 {
-	dmg = 2 * pow(1.6, lvl)*pow(1.2, tlvl);
+	dmg = 2 * pow(1.6, lvl-1)*pow(1.2, tlvl-1);
 }
 
 

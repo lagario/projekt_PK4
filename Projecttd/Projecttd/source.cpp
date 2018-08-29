@@ -28,8 +28,13 @@ void disp(sf::RenderWindow *o, mapa m)
 		}
 	}
 	for (size_t i = 0; i < m.tom.size(); i++)
+	{
 		o->draw(*m.tom[i]);
-	
+		if(m.tom[i]->g)
+		{
+			o->draw(*m.tom[i]->g);
+		}
+	}
 	for (size_t i = 0; i <m.eom.size(); i++)
 		o->draw(*m.eom[i]);
 
@@ -60,6 +65,7 @@ int main()
 
 	//m.addtower(3, 68, 1.8, 15, 10 );
 	m.addtower(3, 100, 2.6, 17, 10);
+	m.addgem(m.tom[0], 1);
 
 
 	
