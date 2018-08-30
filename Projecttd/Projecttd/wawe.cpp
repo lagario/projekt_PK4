@@ -23,13 +23,13 @@ wawe::wawe(int amount, float hp, float speed, float armor, float interval1)
 		started.push_back(0);
 	}
 }
-void wawe::updatew(float dt, mapa &m)
+void wawe::updatew(float dt, std::vector<enemy*> &eom)
 {
 	for (size_t i = 0; i <wamount; i++)
 	{
 		if (wawetime>i*interval&&started[i] == 0)
 		{
-			m.eom.push_back(new enemy(whp, wspeed, warmor));
+			eom.push_back(new enemy(whp, wspeed, warmor));
 			started[i] = 1;
 		}
 	}

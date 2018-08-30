@@ -9,6 +9,8 @@ mapa::mapa(int x, int y, std::vector<sf::Vector2i> track1)
 	sizey = y;
 	track = track1;
 	gold = 150;
+	mana = 100;
+	mps = 1;
 	wawenr = 1;
 	tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
@@ -142,6 +144,18 @@ void mapa::updatepos(float t)
 			}
 		}
 	}
+}
+
+void mapa::updatewawes(float d)
+{
+	for (size_t i = 0; i <wawenr; i++)
+	{
+		wawes[i]->updatew(d,eom);
+	}
+
+	mana += mps * d;
+	if (wawes[wawenr - 1]->wawetime > 10)
+		wawenr++;
 }
 
 void mapa::addtower(float d, float r, float s, int x, int y)

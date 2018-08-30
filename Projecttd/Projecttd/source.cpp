@@ -55,10 +55,10 @@ int main()
 	mapa m(x, y, t);
 	interf inter(18, 5,&m,&okno);
 	m.calctrack();
-	std::vector<wawe*> wawes;
+	//std::vector<wawe*> wawes;
 	for (size_t i = 0; i < 100; i++)
 	{
-		wawes.push_back(new wawe(8, pow(2.5,sqrt(i)+1), 4, 1+i, 0.3));
+		m.wawes.push_back(new wawe(8, pow(2.5,sqrt(i)+1), 4, 1+i, 0.3));
 	}
 	
 	
@@ -71,7 +71,7 @@ int main()
 	
 	sf::Clock timer;
 	sf::Clock totalt;
-	wawes[0]->updatew(0.01,m);
+	//wawes[0]->updatew(0.01,m);
 	while (okno.isOpen())
 	{
 		sf::Event event;	while (okno.pollEvent(event)) { if (event.type == sf::Event::Closed)okno.close(); } //while
@@ -81,14 +81,11 @@ int main()
 		
 		inter.checktbuild(poz);
 		float dt = timer.getElapsedTime().asMilliseconds();
-		for (size_t i = 0; i <m.wawenr; i++)
-		{
-			wawes[i]->updatew(dt, m);
-		}
+		
 		m.updatepos(dt);
-		if (m.eom.size() == 0&&wawes[m.wawenr-1]->wawetime>1&&m.wawenr<wawes.size()-1)
-			m.wawenr++;
-
+		/*if (m.eom.size() == 0&&wawes[m.wawenr-1]->wawetime>1&&m.wawenr<wawes.size())
+			m.wawenr++;*/
+		m.updatewawes(dt);
 		m.checke(dt);
 
 		timer.restart();

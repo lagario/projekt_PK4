@@ -88,7 +88,7 @@ void interf::disp()
 	ss2 << "wawe: " << m->wawenr;
 
 	
-	if (font.loadFromFile("C:/Users/krzys/source/repos/projekt_PK4/Projecttd/Debug/sansation.ttf"))
+	if (font.loadFromFile("sansation.ttf"))
 	{
 		
 
