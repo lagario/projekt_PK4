@@ -2,15 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "mapa.h"
 #include <vector>
-#include "enemy.h"
-#include "wawe.h"
-#include "tower.h"
 #include "interf.h"
-#include "bullet.h"
 
-int x = 30;
+
+int x = 35;
 int y = 20;
 
 void disp(sf::RenderWindow *o, mapa m)
@@ -44,35 +40,32 @@ void disp(sf::RenderWindow *o, mapa m)
 
 int main()
 {
-	sf::RenderWindow okno(sf::VideoMode(20 + 20 * x, 200 + 20 * y), "td");
+	sf::RenderWindow okno(sf::VideoMode(20 + 20 * x, 250 + 20 * y), "td");
 	std::vector<sf::Vector2i> t;
 	t.push_back(sf::Vector2i(0, 4));
 	t.push_back(sf::Vector2i(19, 4));
 	t.push_back(sf::Vector2i(19, 11));
 	t.push_back(sf::Vector2i(14, 11));
 	t.push_back(sf::Vector2i(14, 2));
-	t.push_back(sf::Vector2i(29, 2));
+	t.push_back(sf::Vector2i(34, 2));
 	mapa m(x, y, t);
-	interf inter(18, 5,&m,&okno);
-	m.calctrack();
-	//std::vector<wawe*> wawes;
+	interf inter(18, 7,&m,&okno);
+
 	for (size_t i = 0; i < 100; i++)
 	{
-		m.wawes.push_back(new wawe(8, pow(2.5,sqrt(i)+1), 4, 1+i, 0.3));
+		m.wawes.push_back(new wawe(6, pow(2.5,sqrt(i)+1), 4, 1+i, 0.3));
 	}
 	
 	
 
-	//m.addtower(3, 68, 1.8, 15, 10 );
-	m.addtower(3, 100, 2.6, 17, 10);
-	m.addgem(m.tom[0], 1);
+	m.addtower(3, 100, 1, 17, 10);
+	m.addgem(m.tom[0], 2);
 
 
-	
 	sf::Clock timer;
 	sf::Clock totalt;
 	//wawes[0]->updatew(0.01,m);
-	while (okno.isOpen())
+	while (okno.isOpen()&&m.gamestate==1)
 	{
 		sf::Event event;	while (okno.pollEvent(event)) { if (event.type == sf::Event::Closed)okno.close(); } //while
 		okno.clear();	okno.setFramerateLimit(60);
@@ -83,17 +76,18 @@ int main()
 		float dt = timer.getElapsedTime().asMilliseconds();
 		
 		m.updatepos(dt);
-		/*if (m.eom.size() == 0&&wawes[m.wawenr-1]->wawetime>1&&m.wawenr<wawes.size())
-			m.wawenr++;*/
 		m.updatewawes(dt);
 		m.checke(dt);
 
 		timer.restart();
-		disp(&okno, m);
-		inter.disp();
 
+		inter.disp();
+		disp(&okno, m);
 		okno.display();
+
 	} //while
+
+
 	return 0;
 }
 			

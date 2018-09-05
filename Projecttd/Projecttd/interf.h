@@ -9,15 +9,16 @@ class interf
 	bool towerclick;
 	bool pressedt;
 	bool pressedu;
+	bool pressedl;
 	sf::Font font;
-	sf::Text t1,t2,t3;
+	sf::Text t1,t2,t3,t4;
 	sf::RenderWindow *w;
 	mapa *m;
 
 	tower* gettptr(int, int);
 public:
 
-	int **tab;
+	//int **tab;
 
 	interf(int x,int y, mapa *ma, sf::RenderWindow *wi);
 	void checktbuild(sf::Vector2i poz);

@@ -11,9 +11,8 @@ class wawe
 	float interval;
 	std::vector<int> started;
 public:
-	//std::vector<enemy*> e;
 	
-	
+
 	float wawetime;
 	wawe();
 

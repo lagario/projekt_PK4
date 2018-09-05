@@ -7,6 +7,8 @@ gem::gem(int typ,sf::Vector2f poz)
 	type = typ;
 	if (type == 1)
 		setFillColor(sf::Color::Blue);
+	if (type == 2)
+		setFillColor(sf::Color::Red);
 	setRadius(4);
 	setOrigin(0, 0);
 	lvl = 1;

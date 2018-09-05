@@ -9,15 +9,16 @@ mapa::mapa(int x, int y, std::vector<sf::Vector2i> track1)
 	sizey = y;
 	track = track1;
 	gold = 150;
-	mana = 100;
+	mana = 100000;
 	mps = 1;
 	wawenr = 1;
+	gamestate = 1;
 	tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
 	{
 		tab[i] = new int[y];
 	}
-
+	calctrack();
 }
 
 void mapa::calctrack()
@@ -97,46 +98,25 @@ sf::Vector2f mapa::caclpos(float d)
 		}
 	}
 
+	gamestate = 2;
 	return sf::Vector2f(track[track.size() - 1]);
 
 }
 
 void mapa::updatepos(float t)
 {
-	for (size_t i = 0; i < eom.size(); i++)
-	{
-
-
-
-
-		eom[i]->dist += t * eom[i]->speed / 1000;
-		eom[i]->setPosition(caclpos(eom[i]->dist).x * 20 + 20, caclpos(eom[i]->dist).y * 20 + 20);
-		eom[i]->updatee(t);
-	}
-
-
+	
 	for (size_t i = 0; i < bom.size(); i++)
 	{
 		
 		if (bom[i]->update(t))
 		{
 
-			bom[i]->en->takedmg(bom[i]->tow->dmg, (bom[i]->tow->g==nullptr?0: bom[i]->tow->g->dmg));
-			if (bom[i]->en->hp < 0.00001)
-			{
-				enemy*p=bom[i]->en;
-				for (size_t i2 = 0; i2 < bom.size(); i2++)
-				{
-					if (bom[i2]->en ==p)
-					{
-						delete bom[i2];
-						bom.erase(bom.begin() + i2);
-						i2--;
-					}
-					
-				}
-				deletee(p);
-			}	
+			bom[i]->en->takedmg(bom[i]->tow->dmg, (bom[i]->tow->g==nullptr?0: bom[i]->tow->g->dmg), 
+				(bom[i]->tow->g == nullptr ? 0 : bom[i]->tow->g->gett()));
+			if (bom[i]->en->hp < 0.0001)		
+				deletee(bom[i]->en);
+			
 			else
 			{
 				delete bom[i];
@@ -144,6 +124,26 @@ void mapa::updatepos(float t)
 			}
 		}
 	}
+	for (size_t i = 0; i < eom.size(); i++)
+	{
+		enemy *e = eom[i];
+		e->dist += t * e->speed / 1000;
+		e->setPosition(caclpos(e->dist).x * 20 + 20, caclpos(e->dist).y * 20 + 20);
+
+		e->updatee(t);
+		if (e->hp < 0.0001)
+		{
+
+			deletee(e);
+			i--;
+		}
+	}
+
+	for (size_t i = 0; i < eom.size(); i++)
+	{
+
+	}
+
 }
 
 void mapa::updatewawes(float d)
@@ -153,15 +153,22 @@ void mapa::updatewawes(float d)
 		wawes[i]->updatew(d,eom);
 	}
 
-	mana += mps * d;
-	if (wawes[wawenr - 1]->wawetime > 10)
+	mana += mps * d/1000;
+	if (wawes[wawenr - 1]->wawetime > 15)
 		wawenr++;
+}
+
+void mapa::nextw()
+{
+	mana += mps * (15 - wawes[wawenr - 1]->wawetime);
+	wawenr++;
 }
 
 void mapa::addtower(float d, float r, float s, int x, int y)
 {
 	tom.push_back(new tower(d, r, s, x, y));
 	tab[x][y] = 2;
+	gold -= 50;
 }
 
 void mapa::checke(float dt)
@@ -179,14 +186,6 @@ void mapa::checke(float dt)
 
 					towershoot(tom[i],eom[j]->getPosition(),eom[j]);
 
-					//eom[j]->hp -= tom[i]->dmg;//
-					//tom[i]->tfls = 0;
-					//if (eom[j]->hp <= 0)
-					//{
-					//	delete eom[j];
-					//	eom.erase(eom.begin() + j);
-
-					//}
 				}
 
 		}
@@ -195,9 +194,10 @@ void mapa::checke(float dt)
 
 void mapa::addgem(tower* t, int typ)
 {
-	if (t->g == nullptr)
+	if (t->g == nullptr&&mana>50)
 	{
 		t->g = new gem(typ, t->getPosition()-sf::Vector2f(4,-4));
+		mana -= 50;
 	}
 }
 
@@ -209,7 +209,16 @@ void mapa::towershoot(tower* tow, sf::Vector2f epos, enemy* ei)
 }
 void mapa::deletee(enemy *en)
 {
-		
+	for (size_t i2 = 0; i2 < bom.size(); i2++)
+	{
+		if (bom[i2]->en == en)
+		{
+			delete bom[i2];
+			bom.erase(bom.begin() + i2);
+			i2--;
+		}
+
+	}
 		std::vector<enemy*>::iterator it = eom.begin();
 		while (it != eom.end() && *it != en)
 		{

@@ -7,8 +7,13 @@ class gem : public sf::CircleShape
 	int lvl;
 
 public:
+
+	int gett() { return type; }
 	float dmg;
 	void updatedmg(int tlvl);
+	int getl() { return lvl; }
+
+	void upgrade() { lvl++; }
 
 	gem(int ,sf::Vector2f );
 	~gem();

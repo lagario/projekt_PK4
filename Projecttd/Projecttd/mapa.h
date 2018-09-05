@@ -10,10 +10,13 @@ class mapa
 {
 int sizex;
 int sizey;
+std::vector<sf::Vector2i> track;
+void calctrack();
 
 public:
-	std::vector<wawe*> wawes;
 
+	int gamestate;
+	std::vector<wawe*> wawes;
 	std::vector<tower*> tom;
 	std::vector<enemy*> eom;
 	std::vector<bullet*> bom;
@@ -23,13 +26,13 @@ public:
 	float mana;
 	float mps;
 	int wawenr ;
-	std::vector<sf::Vector2i> track;
+	
 	bool isinmap(sf::Vector2f pos);
 	bool isinmap(sf::Vector2i pos);
 	
 	int**tab;
 	mapa(int x, int y, std::vector<sf::Vector2i> track);
-	void calctrack();
+	
 	sf::Vector2f caclpos(float d);
 	float pdist(sf::Vector2i , sf::Vector2i );
 	float pdist(sf::Vector2f , sf::Vector2f );
@@ -39,6 +42,7 @@ public:
 	void deletee(enemy* en);
 	void addtower(float d, float r, float s, int x, int y);
 	void addgem(tower*, int typ);
+	void nextw();
 
 	void checke(float dt);
 	void towershoot(tower* tow,sf::Vector2f epos,enemy* ei);

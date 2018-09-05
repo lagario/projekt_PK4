@@ -17,11 +17,12 @@ interf::interf(int x, int y,mapa *ma,sf::RenderWindow *wi)
 	towerclick = 0;
 	pressedt = 0;
 	pressedu = 0;
-	tab = new int*[x];
+	font.loadFromFile("sansation.ttf");
+	/*tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
 	{
 		tab[i] = new int[y];
-	}
+	}*/
 }
 
 tower*interf::gettptr(int x, int y)
@@ -45,19 +46,31 @@ void interf::disp()
 	sf::RectangleShape sq;
 	sq.setSize(sf::Vector2f(20*sizex, 20*sizey));
 	sq.setFillColor(sf::Color::Cyan);
-
-	
 	sq.setPosition(sf::Vector2f(10 ,m->getsizey()+20));
 	w->draw(sq);
 
 	sq.setFillColor(sf::Color::Yellow);
-	sq.setSize(sf::Vector2f(200, 20 * sizey));
+	sq.setSize(sf::Vector2f(300, 20 * sizey));
 	sq.setPosition(sf::Vector2f(20+20*sizex, m->getsizey() + 20));
 	w->draw(sq);
 
 	sq.setPosition(sf::Vector2f(10, m->getsizey()+sizey*20 + 30));
 	sq.setSize(sf::Vector2f(sizex*20, 50));
 	w->draw(sq);
+
+	sq.setSize(sf::Vector2f(50, 50));
+	sq.setPosition(sf::Vector2f(20 + 20 * sizex, m->getsizey() + sizey * 20 + 30));
+	sq.setFillColor(sf::Color::Color(220, 220, 220, 255));
+	w->draw(sq);
+
+	sq.setSize(sf::Vector2f(150, 50));
+	sq.setPosition(sf::Vector2f(90 + 20 * sizex, m->getsizey() + sizey * 20 + 30));
+	sq.setFillColor(sf::Color::Color(220, 220, 220, 255));
+	w->draw(sq);
+
+
+
+
 
 	sq.setPosition(sf::Vector2f(20,22+m->getsizey()));
 	sq.setFillColor(sf::Color::Green);
@@ -68,25 +81,40 @@ void interf::disp()
 	sq.setSize(sf::Vector2f(12, 12));
 	w->draw(sq);
 	
-	sq.setPosition(sf::Vector2f(18, 42 + m->getsizey()));
+
+	sq.setPosition(sf::Vector2f(18, 48 + m->getsizey()));
 	sq.setSize(sf::Vector2f(4, 12));
 	sq.setRotation(0);
 	w->draw(sq);
 	sf::CircleShape tr;
 	tr.setPointCount(3);
-	tr.setPosition(sf::Vector2f(20, 44 + m->getsizey()));
+	tr.setPosition(sf::Vector2f(20, 50 + m->getsizey()));
 	tr.setFillColor(sf::Color::Green);
 	tr.setRadius(6);
 	tr.setOrigin(tr.getRadius(), tr.getRadius());
 	w->draw(tr);
+	tr.setFillColor(sf::Color::Blue);
+	sq.setFillColor(sf::Color::Blue);
+	tr.setPosition(sf::Vector2f(20, 88 + m->getsizey()));
+	sq.setPosition(sf::Vector2f(18, 86 + m->getsizey()));
+	w->draw(tr);
+	w->draw(sq);
 
+	tr.setPosition(sf::Vector2f(20, 70 + m->getsizey()));
+	tr.setPointCount(30);
+	w->draw(tr);
+	tr.setPosition(sf::Vector2f(20, 106 + m->getsizey()));
+	tr.setFillColor(sf::Color::Red);
+	w->draw(tr);
 
-
-	std::ostringstream ss1,ss2;
-	
-	ss1 << "gold: "<<m->gold;
+	std::ostringstream ss1, ss2;
+	ss1.precision(4);
+	ss1 << "gold: "<<m->gold<<"\tmana: "<<m->mana;
 	ss2 << "wawe: " << m->wawenr;
-
+	
+	
+	
+	
 	
 	if (font.loadFromFile("sansation.ttf"))
 	{
@@ -94,11 +122,12 @@ void interf::disp()
 
 		t1.setFont(font);
 		t1.setCharacterSize(20);
-		t1.setPosition(100, 20 + m->getsizey());
+		t1.setPosition(120, 20 + m->getsizey());
 		t1.setString(ss1.str());
 		t1.setFillColor(sf::Color::Black);
 		w->draw(t1);
 		w->draw(t2);
+		w->draw(t4);
 
 		t3.setFont(font);
 		t3.setCharacterSize(20);
@@ -106,43 +135,29 @@ void interf::disp()
 		t3.setString(ss2.str());
 		t3.setFillColor(sf::Color::Black);
 		w->draw(t3);
+		t3.setPosition(25 + 20 * sizex, m->getsizey() + sizey * 20 + 40);
+		t3.setString("next");
+		w->draw(t3);
+
+		t3.setCharacterSize(18);
+		t3.setPosition(40, m->getsizey()+ 18);
+		t3.setString("T+click\nU\nB+click\nL\nR+click");
+		w->draw(t3);
+
+
 	}
 }
 
+
+
 void interf::checktbuild(sf::Vector2i poz)
 {
+	bool mp = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	static enemy* enem=nullptr;
+
+	std::ostringstream ss2;
 	int xt = (poz.x - 10) / 20;
 	int yt = (poz.y - 10) / 20;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-
-		if (towerclick&&poz.y < m->getsizey() && m->tab[xt][yt] == 1 && m->gold >= 50)
-		{
-			m->gold -= 50;
-
-			m->addtower(3, 70, 1.5, xt, yt);
-			towerclick = 0;
-		}
-		else if (m->pdist(poz, sf::Vector2i(20, 30 + m->getsizey())) < 10)
-			towerclick = 1;
-	}
-	if (m->isinmap(poz)&&m->tab[xt][yt] == 2)
-	{
-		tower* p = gettptr(xt, yt);
-		std::ostringstream ss1;
-		ss1 << "dmg: " << p->dmg << "\nrange: " << p->range << "\nspeed: " << p->sps<<"\ngemdmg: "<< (p->g == nullptr ? 0 : p->g->dmg);
-		t2.setFont(font);
-		t2.setCharacterSize(20);
-		t2.setPosition(30 + sizex * 20, 20 + m->getsizey());
-		t2.setString(ss1.str());
-		t2.setFillColor(sf::Color::Black);
-		//w->draw(t1);
-
-	}
-
-
-
-	
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{
@@ -154,35 +169,130 @@ void interf::checktbuild(sf::Vector2i poz)
 	}
 	else
 		pressedt = 0;
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+
+	if (mp)
 	{
-		if (!pressedu&&m->tab[xt][yt]==2)
+
+		if (towerclick&&poz.y < m->getsizey() && m->tab[xt][yt] == 1 && m->gold >= 50)
+		{
+			
+
+			m->addtower(3, 70, 1.5, xt, yt);
+			towerclick = 0;
+		}
+		else if (m->pdist(poz, sf::Vector2i(20, 30 + m->getsizey())) < 10)
+			towerclick = 1;
+	}
+
+
+
+	if (m->isinmap(poz))
+	{
+		if (m->tab[xt][yt] == 2)
+		{
+
+			tower* p = gettptr(xt, yt);
+			std::ostringstream ss1;
+			ss1.precision(4);
+			ss1 << "dmg: " << p->dmg << "\nrange: " << p->range << "\nspeed: " << p->sps << "\ngemdmg: " << (p->g == nullptr ? 0 : p->g->dmg)
+				<< "\ntower lvl: " << p->getl() << "  lvlup cost: " << 25 * pow(2, p->getl()) << "\ngem lvl: ";
+			if (p->g)
+			{
+				ss1 << (p->g == nullptr ? 0 : p->g->getl())
+					<< "  upg mana cost: " << 25 * pow(2, p->g->getl());
+			}
+
+			t2.setFont(font);
+			t2.setCharacterSize(18);
+			t2.setPosition(30 + sizex * 20, 20 + m->getsizey());
+			t2.setString(ss1.str());
+			t2.setFillColor(sf::Color::Black);
+
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+		{
+			if (!pressedu&&m->tab[xt][yt] == 2)
+			{
+				tower*p = gettptr(xt, yt);
+
+				int cost = 25 * pow(2, p->getl());
+				if (m->gold >= cost)
+				{
+					p->upgrade();
+					m->gold -= cost;
+				}
+
+			}
+			pressedu = true;
+		}
+		else
+			pressedu = 0;
+
+		if (mp && sf::Keyboard::isKeyPressed(sf::Keyboard::B) && m->tab[xt][yt] == 2)
 		{
 			tower*p = gettptr(xt, yt);
-			
-			int cost = 25 * pow(2, p->getl());
-			if (m->gold >=cost )
-			{
-				p->upgrade();
-				m->gold -= cost;
-			}
-				
+			m->addgem(p, 1);
 		}
-			pressedu = true;
-	}
-	else
-		pressedu = 0;
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&sf::Keyboard::isKeyPressed(sf::Keyboard::B) && m->tab[xt][yt] == 2)
+		if (mp && sf::Keyboard::isKeyPressed(sf::Keyboard::R) && m->tab[xt][yt] == 2)
+		{
+			tower*p = gettptr(xt, yt);
+			m->addgem(p, 2);
+		}
+
+		if (((mp && poz.x > 20 + 20 * sizex&& poz.y > m->getsizey() + sizey * 20 + 30 &&
+			poz.x < 70 + 20 * sizex&& poz.y < m->getsizey() + sizey * 20 + 80)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			&& m->wawes[m->wawenr - 1]->wawetime > 1)
+		{
+			m->nextw();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+		{
+			if (m->tab[xt][yt] == 2 && pressedl == false)
+			{
+				pressedl = true;
+				tower*p = gettptr(xt, yt);
+				if (p->g)
+				{
+					int cost = 25 * pow(2, p->g->getl());
+					if (m->mana > cost)
+					{
+						p->g->upgrade();
+						p->g->updatedmg(p->getl());
+						m->mana -= cost;
+					}
+				}
+			}
+		}
+		else pressedl = 0;
+
+		if (mp)
+		{
+			for (size_t i = 0; i < m->eom.size(); i++)
+			{
+				if (m->pdist(m->eom[i]->getPosition(), poz) < 10)
+				{
+					enem = m->eom[i];
+				}
+			}
+		}
+	}
+	if (enem!=nullptr)
 	{
-		tower*p = gettptr(xt, yt);
-		m->addgem(p, 1);
+		ss2.precision(4);
+		ss2 << "hp: " << enem->hp << " armor" << enem->geta() << "\nfire:" << enem->getf() << " speed: " << enem->speed;
+		t4.setCharacterSize(15);
+		t4.setFont(font);
+		t4.setFillColor(sf::Color::Black);
+		t4.setPosition(90 + 20 * sizex, m->getsizey() + sizey * 20 + 30);
+		t4.setString(ss2.str());
+		
+		
+
 	}
-
-
-
-
 }
 
 
