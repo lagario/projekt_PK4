@@ -59,6 +59,8 @@ void deletem(mapa*m)
 
 		for (size_t i = 0; i < m->bom.size(); i++)
 			delete m->bom[i];
+		for (size_t i = 0; i < m->wawes.size(); i++)
+			delete m->wawes[i];
 	}
 	delete m;
 
