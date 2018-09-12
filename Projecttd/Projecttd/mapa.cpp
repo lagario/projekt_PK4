@@ -3,22 +3,28 @@
 #include <algorithm>
 
 
-mapa::mapa(int x, int y, std::vector<sf::Vector2i> track1)
+mapa::mapa(int x, int y)
 {
+	enem = nullptr;
 	sizex = x;
 	sizey = y;
-	track = track1;
+	//track = track1;
 	gold = 150;
-	mana = 100000;
+	mana = 100;
 	mps = 1;
 	wawenr = 1;
-	gamestate = 1;
+	gamestate = 0;
 	tab = new int*[x];
 	for (size_t i = 0; i < x; i++)
 	{
 		tab[i] = new int[y];
 	}
 	calctrack();
+}
+
+void mapa::addpoint(int x,int y)
+{
+	track.push_back(sf::Vector2i(x, y));
 }
 
 void mapa::calctrack()
@@ -69,13 +75,13 @@ float mapa::pdist(sf::Vector2f p1, sf::Vector2i p2)
 }
 bool mapa::isinmap(sf::Vector2f pos)
 {
-	if (pos.x > 10 && pos.y > 10 && pos.x < 20 * sizex + 10 && sizey < 20 * sizey + 10)
+	if (pos.x > 10 && pos.y > 10 && pos.x < 20 * sizex + 10 && pos.y < 20 * sizey + 10)
 		return true;
 	return 0;
 }
 bool mapa::isinmap(sf::Vector2i pos)
 {
-	if (pos.x > 10 && pos.y > 10 && pos.x < 20 * sizex + 10 && sizey < 20 * sizey + 10)
+	if (pos.x > 10 && pos.y > 10 && pos.x < 20 * sizex + 10 && pos.y < 20 * sizey + 10)
 		return true;
 	return 0;
 }
@@ -209,6 +215,10 @@ void mapa::towershoot(tower* tow, sf::Vector2f epos, enemy* ei)
 }
 void mapa::deletee(enemy *en)
 {
+	if (enem == en)
+	{
+		enem = nullptr;
+	}
 	for (size_t i2 = 0; i2 < bom.size(); i2++)
 	{
 		if (bom[i2]->en == en)
@@ -231,6 +241,18 @@ void mapa::deletee(enemy *en)
 		}
 		gold += 2+pow(wawenr, 1.4);
 }
+
+void mapa::upgmps()
+{
+	float x = mps;
+	int cost = x * x * 15 + x * 5 + 30;
+	if (gold >= cost)
+	{
+		gold -= cost;
+		mps++;
+	}
+}
+
 
 
 

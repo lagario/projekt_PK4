@@ -17,12 +17,12 @@ interf::interf(int x, int y,mapa *ma,sf::RenderWindow *wi)
 	towerclick = 0;
 	pressedt = 0;
 	pressedu = 0;
-	font.loadFromFile("sansation.ttf");
-	/*tab = new int*[x];
-	for (size_t i = 0; i < x; i++)
+	pressedmouse = 0;
+	if (!font.loadFromFile("sansation.ttf"))
 	{
-		tab[i] = new int[y];
-	}*/
+		//error
+	}
+	
 }
 
 tower*interf::gettptr(int x, int y)
@@ -46,33 +46,35 @@ void interf::disp()
 	sf::RectangleShape sq;
 	sq.setSize(sf::Vector2f(20*sizex, 20*sizey));
 	sq.setFillColor(sf::Color::Cyan);
-	sq.setPosition(sf::Vector2f(10 ,m->getsizey()+20));
+	sq.setPosition(10 ,m->getsizey()+20);
 	w->draw(sq);
 
 	sq.setFillColor(sf::Color::Yellow);
 	sq.setSize(sf::Vector2f(300, 20 * sizey));
-	sq.setPosition(sf::Vector2f(20+20*sizex, m->getsizey() + 20));
+	sq.setPosition(20+20*sizex, m->getsizey() + 20);
 	w->draw(sq);
 
-	sq.setPosition(sf::Vector2f(10, m->getsizey()+sizey*20 + 30));
+	sq.setPosition(10, m->getsizey()+sizey*20 + 30);
 	sq.setSize(sf::Vector2f(sizex*20, 50));
 	w->draw(sq);
 
 	sq.setSize(sf::Vector2f(50, 50));
-	sq.setPosition(sf::Vector2f(20 + 20 * sizex, m->getsizey() + sizey * 20 + 30));
+	sq.setPosition(20 + 20 * sizex, m->getsizey() + sizey * 20 + 30);
 	sq.setFillColor(sf::Color::Color(220, 220, 220, 255));
+	w->draw(sq);
+
+	sq.setSize(sf::Vector2f(65, 50));
+	sq.setPosition(300, m->getsizey() + 25);
 	w->draw(sq);
 
 	sq.setSize(sf::Vector2f(150, 50));
-	sq.setPosition(sf::Vector2f(90 + 20 * sizex, m->getsizey() + sizey * 20 + 30));
-	sq.setFillColor(sf::Color::Color(220, 220, 220, 255));
+	sq.setPosition(90 + 20 * sizex, m->getsizey() + sizey * 20 + 30);
 	w->draw(sq);
 
+	
+	
 
-
-
-
-	sq.setPosition(sf::Vector2f(20,22+m->getsizey()));
+	sq.setPosition(20,22+m->getsizey());
 	sq.setFillColor(sf::Color::Green);
 	sq.setRotation(45);
 	if(towerclick)
@@ -82,42 +84,44 @@ void interf::disp()
 	w->draw(sq);
 	
 
-	sq.setPosition(sf::Vector2f(18, 48 + m->getsizey()));
+	sq.setPosition(18, 48 + m->getsizey());
 	sq.setSize(sf::Vector2f(4, 12));
 	sq.setRotation(0);
 	w->draw(sq);
 	sf::CircleShape tr;
 	tr.setPointCount(3);
-	tr.setPosition(sf::Vector2f(20, 50 + m->getsizey()));
+	tr.setPosition(20, 50 + m->getsizey());
 	tr.setFillColor(sf::Color::Green);
 	tr.setRadius(6);
 	tr.setOrigin(tr.getRadius(), tr.getRadius());
 	w->draw(tr);
 	tr.setFillColor(sf::Color::Blue);
 	sq.setFillColor(sf::Color::Blue);
-	tr.setPosition(sf::Vector2f(20, 88 + m->getsizey()));
-	sq.setPosition(sf::Vector2f(18, 86 + m->getsizey()));
+	tr.setPosition(20, 88 + m->getsizey());
+	sq.setPosition(18, 86 + m->getsizey());
 	w->draw(tr);
 	w->draw(sq);
 
-	tr.setPosition(sf::Vector2f(20, 70 + m->getsizey()));
+	tr.setPosition(20, 70 + m->getsizey());
 	tr.setPointCount(30);
 	w->draw(tr);
-	tr.setPosition(sf::Vector2f(20, 106 + m->getsizey()));
+	tr.setPosition(20, 106 + m->getsizey());
 	tr.setFillColor(sf::Color::Red);
 	w->draw(tr);
 
-	std::ostringstream ss1, ss2;
-	ss1.precision(4);
-	ss1 << "gold: "<<m->gold<<"\tmana: "<<m->mana;
+
+	float x = m->mps;
+	int costm = x * x * 15 + x * 5 + 30;
+	std::ostringstream ss1, ss2,ss3;
+	//ss1.precision(4);
+	ss1 << "gold: "<<m->gold<<"\nmana: "<<floor(m->mana)<<" mps: "<<m->mps;
 	ss2 << "wawe: " << m->wawenr;
+	ss3 << "+1 mps\ncost: " << costm;
 	
 	
 	
 	
 	
-	if (font.loadFromFile("sansation.ttf"))
-	{
 		
 
 		t1.setFont(font);
@@ -128,7 +132,7 @@ void interf::disp()
 		w->draw(t1);
 		w->draw(t2);
 		w->draw(t4);
-
+		
 		t3.setFont(font);
 		t3.setCharacterSize(20);
 		t3.setPosition(20, 40 + m->getsizey()+sizey*20);
@@ -144,8 +148,18 @@ void interf::disp()
 		t3.setString("T+click\nU\nB+click\nL\nR+click");
 		w->draw(t3);
 
-
-	}
+		t3.setPosition(300, m->getsizey() + 30);
+		t3.setCharacterSize(12);
+		t3.setString(ss3.str());
+		w->draw(t3);
+		if (m->gamestate == 2)
+		{
+			t3.setPosition(20, m->getsizey() -100);
+			t3.setCharacterSize(25);
+			t3.setString("GAME OVER\nrestart?(Y/N)");
+			w->draw(t3);
+		}
+	
 }
 
 
@@ -153,7 +167,7 @@ void interf::disp()
 void interf::checktbuild(sf::Vector2i poz)
 {
 	bool mp = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-	static enemy* enem=nullptr;
+	
 
 	std::ostringstream ss2;
 	int xt = (poz.x - 10) / 20;
@@ -235,19 +249,14 @@ void interf::checktbuild(sf::Vector2i poz)
 			m->addgem(p, 1);
 		}
 
-		if (mp && sf::Keyboard::isKeyPressed(sf::Keyboard::R) && m->tab[xt][yt] == 2)
+		if (mp && sf::Keyboard::isKeyPressed(sf::Keyboard::R) && 
+			m->tab[xt][yt] == 2)
 		{
 			tower*p = gettptr(xt, yt);
 			m->addgem(p, 2);
 		}
 
-		if (((mp && poz.x > 20 + 20 * sizex&& poz.y > m->getsizey() + sizey * 20 + 30 &&
-			poz.x < 70 + 20 * sizex&& poz.y < m->getsizey() + sizey * 20 + 80)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			&& m->wawes[m->wawenr - 1]->wawetime > 1)
-		{
-			m->nextw();
-		}
+		
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
 		{
@@ -275,23 +284,47 @@ void interf::checktbuild(sf::Vector2i poz)
 			{
 				if (m->pdist(m->eom[i]->getPosition(), poz) < 10)
 				{
-					enem = m->eom[i];
+					m->enem = m->eom[i];
 				}
 			}
 		}
 	}
-	if (enem!=nullptr)
+	
+	
+
+		if (((mp && poz.x > 20 + 20 * sizex&& poz.y > m->getsizey() + sizey * 20 + 30 &&
+			poz.x < 70 + 20 * sizex&& poz.y < m->getsizey() + sizey * 20 + 80)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			&& m->wawes[m->wawenr - 1]->wawetime > 1)
+			m->nextw();
+		
+		if (!pressedmouse && ((mp && poz.x > 300 && poz.y > m->getsizey() + 25 &&
+			poz.x < 365 && poz.y < m->getsizey() + 75)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::M)))
+		{
+			m->upgmps();
+			pressedmouse = true;
+		}
+		if (!mp)
+			pressedmouse = 0;
+
+
+
+	
+
+	if (m->enem!=nullptr)
 	{
 		ss2.precision(4);
-		ss2 << "hp: " << enem->hp << " armor" << enem->geta() << "\nfire:" << enem->getf() << " speed: " << enem->speed;
+		ss2 << "hp: " << m->enem->hp << " armor" << m->enem->geta() << "\nfire:" << m->enem->getf() << " speed: " << m->enem->speed;
 		t4.setCharacterSize(15);
 		t4.setFont(font);
 		t4.setFillColor(sf::Color::Black);
 		t4.setPosition(90 + 20 * sizex, m->getsizey() + sizey * 20 + 30);
 		t4.setString(ss2.str());
-		
-		
-
+	}
+	else
+	{
+		t4.setString("");
 	}
 }
 

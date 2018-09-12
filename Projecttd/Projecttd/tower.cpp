@@ -18,10 +18,11 @@ tower::tower(float d, float r, float s, int x, int y)
 
 void tower::upgrade()
 {
-	dmg *= 1.9;
-	range *= 1.1;
-	sps *= 1.15;
 	lvl++;
+	dmg = 1 + lvl + lvl * lvl + pow(lvl, 3)*0.1 + pow(lvl, 4)*0.03 + pow(lvl, 5)*0.003;
+	range += 8;
+	sps *= 1.12;
+	
 
 	if(g)
 	g->updatedmg(lvl);

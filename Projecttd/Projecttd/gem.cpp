@@ -18,7 +18,7 @@ gem::gem(int typ,sf::Vector2f poz)
 }
 void gem::updatedmg(int tlvl)
 {
-	dmg = 2 * pow(1.6, lvl-1)*pow(1.2, tlvl-1);
+	dmg = 2 * pow(1.7, lvl-1)*pow(1.2, tlvl-1);
 }
 
 

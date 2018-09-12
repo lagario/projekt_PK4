@@ -11,10 +11,12 @@ class mapa
 int sizex;
 int sizey;
 std::vector<sf::Vector2i> track;
-void calctrack();
+sf::Vector2f caclpos(float d);
 
 public:
 
+	void calctrack();
+	enemy * enem;
 	int gamestate;
 	std::vector<wawe*> wawes;
 	std::vector<tower*> tom;
@@ -26,14 +28,15 @@ public:
 	float mana;
 	float mps;
 	int wawenr ;
+	void upgmps();
 	
 	bool isinmap(sf::Vector2f pos);
 	bool isinmap(sf::Vector2i pos);
 	
 	int**tab;
-	mapa(int x, int y, std::vector<sf::Vector2i> track);
+	mapa(int x, int y);
+	void addpoint(int, int);
 	
-	sf::Vector2f caclpos(float d);
 	float pdist(sf::Vector2i , sf::Vector2i );
 	float pdist(sf::Vector2f , sf::Vector2f );
 	float pdist(sf::Vector2f , sf::Vector2i );

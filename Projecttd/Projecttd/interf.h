@@ -10,6 +10,7 @@ class interf
 	bool pressedt;
 	bool pressedu;
 	bool pressedl;
+	bool pressedmouse;
 	sf::Font font;
 	sf::Text t1,t2,t3,t4;
 	sf::RenderWindow *w;
