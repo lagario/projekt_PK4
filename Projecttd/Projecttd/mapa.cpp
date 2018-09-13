@@ -9,7 +9,7 @@ mapa::mapa(int x, int y)
 	sizex = x;
 	sizey = y;
 	//track = track1;
-	gold = 150;
+	gold = 200;
 	mana = 100;
 	mps = 1;
 	wawenr = 1;

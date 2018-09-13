@@ -145,7 +145,7 @@ void interf::disp()
 
 		t3.setCharacterSize(18);
 		t3.setPosition(40, m->getsizey()+ 18);
-		t3.setString("T+click\nU\nB+click\nL\nR+click");
+		t3.setString("T+click\nU\nB+click (on tower)\nL\nR+click");
 		w->draw(t3);
 
 		t3.setPosition(300, m->getsizey() + 30);
@@ -157,6 +157,14 @@ void interf::disp()
 			t3.setPosition(20, m->getsizey() -100);
 			t3.setCharacterSize(25);
 			t3.setString("GAME OVER\nrestart?(Y/N)");
+			w->draw(t3);
+		}
+
+		if (m->gamestate == 0)
+		{
+			t3.setPosition(20, m->getsizey() - 100);
+			t3.setCharacterSize(25);
+			t3.setString("press space to start");
 			w->draw(t3);
 		}
 	
